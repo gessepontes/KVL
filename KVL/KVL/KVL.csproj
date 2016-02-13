@@ -1,0 +1,712 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D2CD8191-BEF2-4158-B3E3-63A7EFFBB552}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KVL</RootNamespace>
+    <AssemblyName>KVL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\CampeonatoController.cs" />
+    <Compile Include="Controllers\CampeonatoGrupoController.cs" />
+    <Compile Include="Controllers\CampoController.cs" />
+    <Compile Include="Controllers\GolAmistosoController.cs" />
+    <Compile Include="Controllers\HorarioDisponivelController.cs" />
+    <Compile Include="Controllers\InscritoController.cs" />
+    <Compile Include="Controllers\JogadorController.cs" />
+    <Compile Include="Controllers\JogadorInscritoController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PartidaAmistosaController.cs" />
+    <Compile Include="Controllers\PartidaCampeonatoController.cs" />
+    <Compile Include="Controllers\PessoaController.cs" />
+    <Compile Include="Controllers\PosicaoController.cs" />
+    <Compile Include="Controllers\PreInscritoController.cs" />
+    <Compile Include="Controllers\SumulaController.cs" />
+    <Compile Include="Controllers\TimeController.cs" />
+    <Compile Include="Models\ActionResultExtensions.cs" />
+    <Compile Include="Models\Campeonato.cs" />
+    <Compile Include="Models\CampeonatoGrupo.cs" />
+    <Compile Include="Models\Campo.cs" />
+    <Compile Include="Models\Cartao.cs" />
+    <Compile Include="Models\DecimalModelBinder.cs" />
+    <Compile Include="Models\GolAmistoso.cs" />
+    <Compile Include="Models\Gol.cs" />
+    <Compile Include="Models\HorarioDisponivel.cs" />
+    <Compile Include="Models\Inscrito.cs" />
+    <Compile Include="Models\Jogador.cs" />
+    <Compile Include="Models\JogadorInscrito.cs" />
+    <Compile Include="Models\JogadorSumula.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Context\ModeloDados.cs" />
+    <Compile Include="Models\Partida.cs" />
+    <Compile Include="Models\PartidaAmistosa.cs" />
+    <Compile Include="Models\PartidaCampeonato.cs" />
+    <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Models\Posicao.cs" />
+    <Compile Include="Models\PreInscrito.cs" />
+    <Compile Include="Models\Sumula.cs" />
+    <Compile Include="Models\TempDataActionResult.cs" />
+    <Compile Include="Models\Time.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\npm.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\plugins\morris.css" />
+    <Content Include="Content\dist\css\AdminLTE.css" />
+    <Content Include="Content\dist\css\AdminLTE.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black.css" />
+    <Content Include="Content\dist\css\skins\skin-black.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green.css" />
+    <Content Include="Content\dist\css\skins\skin-green.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red.css" />
+    <Content Include="Content\dist\css\skins\skin-red.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.min.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.min.css" />
+    <Content Include="Content\dist\img\avatar.png" />
+    <Content Include="Content\dist\img\avatar04.png" />
+    <Content Include="Content\dist\img\avatar2.png" />
+    <Content Include="Content\dist\img\avatar3.png" />
+    <Content Include="Content\dist\img\avatar5.png" />
+    <Content Include="Content\dist\img\boxed-bg.jpg" />
+    <Content Include="Content\dist\img\boxed-bg.png" />
+    <Content Include="Content\dist\img\credit\american-express.png" />
+    <Content Include="Content\dist\img\credit\cirrus.png" />
+    <Content Include="Content\dist\img\credit\mastercard.png" />
+    <Content Include="Content\dist\img\credit\mestro.png" />
+    <Content Include="Content\dist\img\credit\paypal.png" />
+    <Content Include="Content\dist\img\credit\paypal2.png" />
+    <Content Include="Content\dist\img\credit\visa.png" />
+    <Content Include="Content\dist\img\default-50x50.gif" />
+    <Content Include="Content\dist\img\icons.png" />
+    <Content Include="Content\dist\img\photo1.png" />
+    <Content Include="Content\dist\img\photo2.png" />
+    <Content Include="Content\dist\img\photo3.jpg" />
+    <Content Include="Content\dist\img\photo4.jpg" />
+    <Content Include="Content\dist\img\user1-128x128.jpg" />
+    <Content Include="Content\dist\img\user2-160x160.jpg" />
+    <Content Include="Content\dist\img\user3-128x128.jpg" />
+    <Content Include="Content\dist\img\user4-128x128.jpg" />
+    <Content Include="Content\dist\img\user5-128x128.jpg" />
+    <Content Include="Content\dist\img\user6-128x128.jpg" />
+    <Content Include="Content\dist\img\user7-128x128.jpg" />
+    <Content Include="Content\dist\img\user8-128x128.jpg" />
+    <Content Include="Content\dist\js\app.js" />
+    <Content Include="Content\dist\js\app.min.js" />
+    <Content Include="Content\dist\js\demo.js" />
+    <Content Include="Content\dist\js\pages\dashboard.js" />
+    <Content Include="Content\dist\js\pages\dashboard2.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="fonts\font-awesome\css\ionicons.min.css" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Global.asax" />
+    <Content Include="Imagens\foto\1.jpeg" />
+    <Content Include="Imagens\foto\14.jpeg" />
+    <Content Include="Imagens\foto\3.jpeg" />
+    <Content Include="Imagens\foto\Chrysanthemum.jpg" />
+    <Content Include="Imagens\foto\Hydrangeas.jpg" />
+    <Content Include="Imagens\foto\Jellyfish.jpg" />
+    <Content Include="Imagens\foto\Koala.jpg" />
+    <Content Include="Imagens\foto\Lighthouse.jpg" />
+    <Content Include="Imagens\foto\semimagem.jpg" />
+    <Content Include="Imagens\foto\Tulips.jpg" />
+    <Content Include="Imagens\foto\tumblr_n45agf6AMm1tyjepao1_500.jpg" />
+    <Content Include="Imagens\simbolo\semimagem.gif" />
+    <Content Include="Imagens\table_icon\table_icon_check.png" />
+    <Content Include="Imagens\table_icon\table_icon_close.png" />
+    <Content Include="Imagens\table_icon\table_icon_download.png" />
+    <Content Include="Imagens\table_icon\table_icon_edit.png" />
+    <Content Include="Imagens\table_icon\table_icon_email.png" />
+    <Content Include="Imagens\table_icon\table_icon_plus.png" />
+    <Content Include="Imagens\table_icon\table_icon_search.png" />
+    <Content Include="Imagens\table_icon\table_icon_send.png" />
+    <Content Include="Imagens\table_icon\table_icon_trash.png" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="fonts\font-awesome\less\core.less" />
+    <Content Include="fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="fonts\font-awesome\less\icons.less" />
+    <Content Include="fonts\font-awesome\less\larger.less" />
+    <Content Include="fonts\font-awesome\less\list.less" />
+    <Content Include="fonts\font-awesome\less\mixins.less" />
+    <Content Include="fonts\font-awesome\less\path.less" />
+    <Content Include="fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="fonts\font-awesome\less\spinning.less" />
+    <Content Include="fonts\font-awesome\less\stacked.less" />
+    <Content Include="fonts\font-awesome\less\variables.less" />
+    <Content Include="fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="fonts\font-awesome\scss\_core.scss" />
+    <Content Include="fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="fonts\font-awesome\scss\_list.scss" />
+    <Content Include="fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="fonts\font-awesome\scss\_path.scss" />
+    <Content Include="fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="fonts\font-awesome\scss\_spinning.scss" />
+    <Content Include="fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\campeonato.pubxml" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.validate.custom.pt-br" />
+    <Content Include="Scripts\jquery.validate.custom.pt-br.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\maps.js" />
+    <Content Include="Scripts\maskedinput-binder.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
+    <Content Include="Scripts\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
+    <Content Include="Scripts\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
+    <Content Include="Scripts\plugins\chartjs\Chart.js" />
+    <Content Include="Scripts\plugins\chartjs\Chart.min.js" />
+    <Content Include="Scripts\plugins\flot\excanvas.min.js" />
+    <Content Include="Scripts\plugins\flot\flot-data.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.js" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Scripts\plugins\iCheck\all.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\aero%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\aero.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\aero.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\blue%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\blue.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\blue.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\flat%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\flat.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\flat.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\green%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\green.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\green.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\grey%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\grey.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\grey.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\orange%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\orange.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\orange.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\pink%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\pink.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\pink.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\purple%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\purple.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\purple.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\red%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\red.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\red.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\yellow%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\yellow.css" />
+    <Content Include="Scripts\plugins\iCheck\flat\yellow.png" />
+    <Content Include="Scripts\plugins\iCheck\flat\_all.css" />
+    <Content Include="Scripts\plugins\iCheck\futurico\futurico%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\futurico\futurico.css" />
+    <Content Include="Scripts\plugins\iCheck\futurico\futurico.png" />
+    <Content Include="Scripts\plugins\iCheck\icheck.js" />
+    <Content Include="Scripts\plugins\iCheck\icheck.min.js" />
+    <Content Include="Scripts\plugins\iCheck\line\aero.css" />
+    <Content Include="Scripts\plugins\iCheck\line\blue.css" />
+    <Content Include="Scripts\plugins\iCheck\line\green.css" />
+    <Content Include="Scripts\plugins\iCheck\line\grey.css" />
+    <Content Include="Scripts\plugins\iCheck\line\line%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\line\line.css" />
+    <Content Include="Scripts\plugins\iCheck\line\line.png" />
+    <Content Include="Scripts\plugins\iCheck\line\orange.css" />
+    <Content Include="Scripts\plugins\iCheck\line\pink.css" />
+    <Content Include="Scripts\plugins\iCheck\line\purple.css" />
+    <Content Include="Scripts\plugins\iCheck\line\red.css" />
+    <Content Include="Scripts\plugins\iCheck\line\yellow.css" />
+    <Content Include="Scripts\plugins\iCheck\line\_all.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\aero%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\aero.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\aero.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\blue%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\blue.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\blue.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\green%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\green.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\green.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\grey%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\grey.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\grey.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\minimal%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\minimal.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\minimal.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\orange%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\orange.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\orange.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\pink%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\pink.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\pink.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\purple%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\purple.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\purple.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\red%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\red.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\red.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\yellow%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\yellow.css" />
+    <Content Include="Scripts\plugins\iCheck\minimal\yellow.png" />
+    <Content Include="Scripts\plugins\iCheck\minimal\_all.css" />
+    <Content Include="Scripts\plugins\iCheck\polaris\polaris%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\polaris\polaris.css" />
+    <Content Include="Scripts\plugins\iCheck\polaris\polaris.png" />
+    <Content Include="Scripts\plugins\iCheck\square\aero%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\aero.css" />
+    <Content Include="Scripts\plugins\iCheck\square\aero.png" />
+    <Content Include="Scripts\plugins\iCheck\square\blue%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\blue.css" />
+    <Content Include="Scripts\plugins\iCheck\square\blue.png" />
+    <Content Include="Scripts\plugins\iCheck\square\green%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\green.css" />
+    <Content Include="Scripts\plugins\iCheck\square\green.png" />
+    <Content Include="Scripts\plugins\iCheck\square\grey%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\grey.css" />
+    <Content Include="Scripts\plugins\iCheck\square\grey.png" />
+    <Content Include="Scripts\plugins\iCheck\square\orange%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\orange.css" />
+    <Content Include="Scripts\plugins\iCheck\square\orange.png" />
+    <Content Include="Scripts\plugins\iCheck\square\pink%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\pink.css" />
+    <Content Include="Scripts\plugins\iCheck\square\pink.png" />
+    <Content Include="Scripts\plugins\iCheck\square\purple%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\purple.css" />
+    <Content Include="Scripts\plugins\iCheck\square\purple.png" />
+    <Content Include="Scripts\plugins\iCheck\square\red%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\red.css" />
+    <Content Include="Scripts\plugins\iCheck\square\red.png" />
+    <Content Include="Scripts\plugins\iCheck\square\square%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\square.css" />
+    <Content Include="Scripts\plugins\iCheck\square\square.png" />
+    <Content Include="Scripts\plugins\iCheck\square\yellow%402x.png" />
+    <Content Include="Scripts\plugins\iCheck\square\yellow.css" />
+    <Content Include="Scripts\plugins\iCheck\square\yellow.png" />
+    <Content Include="Scripts\plugins\iCheck\square\_all.css" />
+    <Content Include="Scripts\plugins\jQueryUI\jquery-ui.js" />
+    <Content Include="Scripts\plugins\jQueryUI\jquery-ui.min.js" />
+    <Content Include="Scripts\plugins\jQueryUI\jquery-ui.min1.11.4.js" />
+    <Content Include="Scripts\plugins\jQuery\jQuery-2.1.4.min.js" />
+    <Content Include="Scripts\plugins\morris\morris-data.js" />
+    <Content Include="Scripts\plugins\morris\morris.js" />
+    <Content Include="Scripts\plugins\morris\morris.min.js" />
+    <Content Include="Scripts\plugins\morris\raphael.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Pessoa\Create.cshtml" />
+    <Content Include="Views\Pessoa\Delete.cshtml" />
+    <Content Include="Views\Pessoa\Details.cshtml" />
+    <Content Include="Views\Pessoa\Edit.cshtml" />
+    <Content Include="Views\Pessoa\Index.cshtml" />
+    <Content Include="Views\Login\Create.cshtml" />
+    <Content Include="Views\Login\Delete.cshtml" />
+    <Content Include="Views\Login\Details.cshtml" />
+    <Content Include="Views\Login\Edit.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Senha.cshtml" />
+    <Content Include="Views\Shared\_Mensagem.cshtml" />
+    <Content Include="Views\Time\Create.cshtml" />
+    <Content Include="Views\Time\Delete.cshtml" />
+    <Content Include="Views\Time\Details.cshtml" />
+    <Content Include="Views\Time\Edit.cshtml" />
+    <Content Include="Views\Time\Index.cshtml" />
+    <Content Include="Views\Jogador\Create.cshtml" />
+    <Content Include="Views\Jogador\Delete.cshtml" />
+    <Content Include="Views\Jogador\Details.cshtml" />
+    <Content Include="Views\Jogador\Edit.cshtml" />
+    <Content Include="Views\Jogador\Index.cshtml" />
+    <Content Include="Views\Campo\Create.cshtml" />
+    <Content Include="Views\Campo\Delete.cshtml" />
+    <Content Include="Views\Campo\Details.cshtml" />
+    <Content Include="Views\Campo\Edit.cshtml" />
+    <Content Include="Views\Campo\Index.cshtml" />
+    <Content Include="Views\Campeonato\Create.cshtml" />
+    <Content Include="Views\Campeonato\Delete.cshtml" />
+    <Content Include="Views\Campeonato\Details.cshtml" />
+    <Content Include="Views\Campeonato\Edit.cshtml" />
+    <Content Include="Views\Campeonato\Index.cshtml" />
+    <Content Include="Views\PreInscrito\Create.cshtml" />
+    <Content Include="Views\PreInscrito\Delete.cshtml" />
+    <Content Include="Views\PreInscrito\Details.cshtml" />
+    <Content Include="Views\PreInscrito\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Inscrito\Visualizar.cshtml" />
+    <Content Include="Views\Inscrito\Index.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Posicao\Create.cshtml" />
+    <Content Include="Views\Posicao\Delete.cshtml" />
+    <Content Include="Views\Posicao\Details.cshtml" />
+    <Content Include="Views\Posicao\Edit.cshtml" />
+    <Content Include="Views\Posicao\Index.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Login\ConfirmEmail.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\PartidaCampeonato\Create.cshtml" />
+    <Content Include="Views\PartidaCampeonato\Delete.cshtml" />
+    <Content Include="Views\PartidaCampeonato\Details.cshtml" />
+    <Content Include="Views\PartidaCampeonato\Edit.cshtml" />
+    <Content Include="Views\PartidaCampeonato\Index.cshtml" />
+    <Content Include="Views\PartidaCampeonato\GerarPartidasCampeonato.cshtml" />
+    <Content Include="Views\CampeonatoGrupo\Create.cshtml" />
+    <Content Include="Views\CampeonatoGrupo\Delete.cshtml" />
+    <Content Include="Views\CampeonatoGrupo\Details.cshtml" />
+    <Content Include="Views\CampeonatoGrupo\Edit.cshtml" />
+    <Content Include="Views\CampeonatoGrupo\Index.cshtml" />
+    <Content Include="Views\Sumula\Create.cshtml" />
+    <Content Include="Views\Sumula\Index.cshtml" />
+    <Content Include="Views\JogadorInscrito\Index.cshtml" />
+    <Content Include="Views\JogadorInscrito\Visualizar.cshtml" />
+    <Content Include="Views\Sumula\_JogadorSumula.cshtml" />
+    <Content Include="Views\Jogador\JogadorTransferencia.cshtml" />
+    <Content Include="Views\HorarioDisponivel\Create.cshtml" />
+    <Content Include="Views\HorarioDisponivel\Delete.cshtml" />
+    <Content Include="Views\HorarioDisponivel\Details.cshtml" />
+    <Content Include="Views\HorarioDisponivel\Edit.cshtml" />
+    <Content Include="Views\HorarioDisponivel\Index.cshtml" />
+    <Content Include="Views\PartidaAmistosa\Create.cshtml" />
+    <Content Include="Views\PartidaAmistosa\Delete.cshtml" />
+    <Content Include="Views\PartidaAmistosa\Details.cshtml" />
+    <Content Include="Views\PartidaAmistosa\Edit.cshtml" />
+    <Content Include="Views\PartidaAmistosa\Index.cshtml" />
+    <Content Include="Views\Home\_DadosPartida.cshtml" />
+    <Content Include="Views\Time\PartidasTime.cshtml" />
+    <Content Include="Views\Home\_RankingCompleto.cshtml" />
+    <Content Include="Views\Time\PerfilTime.cshtml" />
+    <Content Include="Views\HorarioDisponivel\CreateTime.cshtml" />
+    <Content Include="Views\HorarioDisponivel\DeleteTime.cshtml" />
+    <Content Include="Views\PreInscrito\IndexTime.cshtml" />
+    <Content Include="Views\PreInscrito\CreateTime.cshtml" />
+    <Content Include="Views\PreInscrito\DeleteTime.cshtml" />
+    <Content Include="Views\Login\EmailTeste.cshtml" />
+    <Content Include="Views\GolAmistoso\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>65501</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:65501/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

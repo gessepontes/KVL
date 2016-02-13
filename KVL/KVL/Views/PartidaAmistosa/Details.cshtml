@@ -1,0 +1,94 @@
+﻿@model KVL.Models.PartidaAmistosa
+
+@{
+    ViewBag.Title = "Detalhes da Partida";
+}
+
+<section class="content-header">
+    <h1>
+        Detalhes da Partida
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Partida</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Partida</h3>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Time 1
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Time.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.iQntGols1)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.iQntGols1)
+                        </dd>
+
+                        <dt>
+                            Time 2
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Time1.sNome)
+                        </dd>
+
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.iQntGols2)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.iQntGols2)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.iCodCampo)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Campo.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.dDataPartida)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.dDataPartida)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sHoraPartida)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sHoraPartida)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "PartidaAmistosa", new { id = Model.IDPartidaAmistosa })'">Editar</button>
+                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "PartidaAmistosa")'">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

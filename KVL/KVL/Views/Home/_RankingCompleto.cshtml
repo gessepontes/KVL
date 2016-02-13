@@ -1,0 +1,49 @@
+﻿@using KVL.Models
+
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ranking Completo</h3>
+                <div class="form-horizontal">
+                    <div class="control-label col-md-12">
+                        <table id="ranking" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Posição</th>
+                                    <th>Time</th>
+                                    <th>Ponto(s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var cont = 1; }
+
+                                @foreach (Ranking item in ViewBag.Ranking)
+                                {
+                                    <tr>
+                                        <td align="center"> @cont° </td>
+                                        <td class="users-list-name text-left">
+                                            @item.sNome.ToUpper()
+                                        </td>
+                                        <td align="center">@item.iPontuacao</td>
+                                    </tr>
+                                    cont++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>

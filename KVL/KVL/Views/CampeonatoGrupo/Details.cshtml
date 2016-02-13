@@ -1,0 +1,61 @@
+﻿@model KVL.Models.CampeonatoGrupo
+
+@{
+    ViewBag.Title = "Detalhes do Grupo do campeonato";
+}
+
+<section class="content-header">
+    <h1>
+        Detalhes da Partida
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Campeonato</a></li>
+        <li class="active">Grupos do Campeonato</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Partida</h3>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                           Campeonato
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Inscrito.PreInscrito.Campeonato.sNome)
+                        </dd>
+                        <dt>
+                          Time
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Inscrito.PreInscrito.Time.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IDGrupo)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.IDGrupo)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "CampeonatoGrupo", new { id = Model.IDCampeonatoGrupo })'">Editar</button>
+                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "CampeonatoGrupo")'">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

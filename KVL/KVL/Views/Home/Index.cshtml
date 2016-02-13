@@ -1,0 +1,250 @@
+﻿@using KVL.Models
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <a href="@Url.Action("PerfilTime", "Time")">@ViewBag.sNome</a>
+        <small>Painel de Controle</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <div class="col-xs-4">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Ranking</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="ranking" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Time</th>
+                                <th>Ponto(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var cont = 1; }
+
+                            @foreach (Ranking item in ViewBag.Ranking)
+                            {
+                                <tr>
+                                    <td align="center"> @cont° </td>
+                                    <td class="users-list-name">
+                                        @item.sNome.ToUpper()
+                                    </td>
+                                    <td align="center">@item.iPontuacao</td>
+                                </tr>
+                                cont++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-header">
+
+                </div>
+
+                <div class="box-footer text-center">
+                    <a href="@Url.Action("RankingCompleto", "Home")" class="modal-link users-list-name">Ranking Completo</a>
+                </div><!-- /.box-footer -->
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Estatisticas de Partidas - @ViewBag.sNome</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart" height="250"></canvas>
+                            </div><!-- ./chart-responsive -->
+                        </div><!-- /.col -->
+                        <div class="col-md-4">
+                            <ul class="chart-legend clearfix">
+                                <li><i class="fa fa-circle-o text-light-blue"></i> Vitórias - @ViewBag.iVitoria</li>
+                                <li><i class="fa fa-circle-o text-red"></i> Derrotas - @ViewBag.iDerrota</li>
+                                <li><i class="fa fa-circle-o text-gray"></i> Empates - @ViewBag.iEmpate</li>
+                            </ul>
+                        </div><!-- /.col -->
+                    </div><!-- /.box -->
+                </div><!-- /.row -->
+            </div><!-- /.box-body -->
+        </div><!-- /.col (LEFT) -->
+        <div class="col-md-6">
+            <!-- USERS LIST -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ultimas Partidas</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+
+                    @if (ViewBag.listaAdversarios != null && ViewBag.listaAdversarios.Count > 0)
+                    {
+                        <ul class="users-list clearfix">
+                            @foreach (ListaAdversarios item in ViewBag.listaAdversarios)
+                            {
+                                <li>
+                                    <img width="100" height="100" src="@string.Format("../../imagens/simbolo/" + @item.sSimbolo, @item.sSimbolo)" alt="@item.sSimbolo">
+                                    <a href="@Url.Action("DadosPartida", "Home", new { id = item.IDPartida, iTipo = item.iTipoPartida })" class="modal-link users-list-name">@item.sNome.ToUpper()</a>
+                                    <span class="users-list-date">@item.dDataPartida.ToString().Substring(0, 10)</span>
+                                </li>
+                            }
+                        </ul><!-- /.users-list -->
+                    }
+                    else
+                    {
+                        <ul>
+                            <li>
+                                <span class="users-list-name">Não existe partida cadastrada.</span>
+                            </li>
+                        </ul><!-- /.users-list -->
+                    }
+
+                </div><!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="@Url.Action("PartidasTime", "Time")">Todas as Partidas</a>
+                </div><!-- /.box-footer -->
+            </div><!--/.box -->
+        </div><!-- /.col -->
+        <!-- /.col -->
+    </div><!-- /.row -->
+
+</section><!-- /.content -->
+
+
+@section scripts {
+
+
+    <section class="scripts">
+
+        <script type="text/javascript">
+            $(function () {
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+                var pieChart = new Chart(pieChartCanvas);
+                var PieData = [
+                  {
+                      value:  @ViewBag.iDerrota,
+                      color: "#f56954",
+                      highlight: "#f56954",
+                      label: "Derrotas"
+                  },
+                  {
+                      value:  @ViewBag.iVitoria,
+                      color: "#3c8dbc",
+                      highlight: "#3c8dbc",
+                      label: "Vitorias"
+                  },
+                  {
+                      value:  @ViewBag.iEmpate,
+                      color: "#d2d6de",
+                      highlight: "#d2d6de",
+                      label: "Empates"
+                  }
+                ];
+                var pieOptions = {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke: true,
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor: "#fff",
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth: 2,
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                    //Number - Amount of animation steps
+                    animationSteps: 100,
+                    //String - Animation easing effect
+                    animationEasing: "easeOutBounce",
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate: true,
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale: false,
+                    //Boolean - whether to make the chart responsive to window resizing
+                    responsive: true,
+                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                    maintainAspectRatio: true,
+                    //String - A legend template
+                    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+                };
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                pieChart.Doughnut(PieData, pieOptions);
+
+
+                /* initialize the calendar
+                 -----------------------------------------------------------------*/
+                //Date for the calendar events (dummy data)
+                var date = new Date();
+                var d = date.getDate(),
+                    m = date.getMonth(),
+                    y = date.getFullYear();
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    buttonText: {
+                        today: 'hoje',
+                        month: 'mês',
+                        week: 'semana',
+                        day: 'dia'
+                    },
+                    //Random default events
+                    events: [
+                        //{
+                        //    title: 'Birthday Party',
+                        //    start: new Date(y, m, d + 1, 19, 0),
+                        //    end: new Date(y, m, d + 1, 22, 30),
+                        //    allDay: false,
+                        //    backgroundColor: "#00a65a", //Success (green)
+                        //    borderColor: "#00a65a" //Success (green)
+                        //},
+
+                           @Html.Raw(ViewBag.eventos)
+
+                    ],
+                    editable: false,
+                    droppable: false
+                });
+
+            });
+        </script>
+    </section>
+}

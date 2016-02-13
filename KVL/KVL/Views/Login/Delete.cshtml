@@ -1,0 +1,84 @@
+﻿@model KVL.Models.Login
+
+@{
+    ViewBag.Title = "Excluir o Acesso";
+}
+
+<section class="content-header">
+    <h1>
+        Você deseja excluir este login
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Acesso</a></li>
+        <li class="active">Login</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Login</h3>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IDPerfil)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.IDPerfil)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Pessoa.sNome)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Pessoa.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sLogin)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sLogin)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.bConfimacao)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.bConfimacao)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.bAtivo)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.bAtivo)
+                        </dd>
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="box-footer">
+                            <input type="submit" value="Excluir" class="btn btn-primary" />
+                            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Login")'">Voltar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

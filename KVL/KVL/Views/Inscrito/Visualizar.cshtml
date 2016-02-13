@@ -1,0 +1,108 @@
+﻿@model List<KVL.Models.Inscrito>
+
+@{
+    ViewBag.Title = "Times Inscritos";
+}
+
+
+<section class="content-header">
+    <h1>
+        Lista Times
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Campeonato</a></li>
+        <li class="active">Lista de times inscritos ou para inscrição</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Lista de times inscritos ou para inscrição</h3>
+                    <hr />
+
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Time
+                                </th>
+                                <th>
+                                    Responsável
+                                </th>
+                                <th>
+                                    Telefône
+                                </th>
+                                <th style="width:3%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PreInscrito.Time.sNome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PreInscrito.Time.Pessoa.sNome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PreInscrito.Time.Pessoa.sTelefone)
+                                    </td>
+                                    <td>
+
+                                        @if (item.IDInscrito == 0)
+                                        {
+                                            using (Html.BeginForm("Create", "Inscrito" ))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("IDCampeonato", item.PreInscrito.IDCampeonato)
+                                                @Html.Hidden("IDPreInscrito", item.PreInscrito.IDPreInscrito)
+                                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-new-window"></span>Adicionar Inscrição</button>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("Delete", "Inscrito"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("IDCampeonato", item.PreInscrito.IDCampeonato)
+                                                @Html.Hidden("IDPreInscrito", item.PreInscrito.IDPreInscrito)
+                                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-erase"></span>Remover Inscrição</button>
+
+                                            }
+
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box-footer">
+                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Inscrito")'">Voltar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function confirmacao() {
+      
+        if (confirm("Você deseja retirar a inscrição deste time?")) {
+            document.getElementById("formDelete").submit();
+        }       
+    }
+</script>

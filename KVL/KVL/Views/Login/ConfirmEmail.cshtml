@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Confirmação de Email";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="col-md-12">
+    <p>
+        Obrigado por confirmar o seu e-mail. Por favor @Html.ActionLink("Clique aqui para fazer o login", "Login", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+</div>

@@ -1,0 +1,91 @@
+﻿@model KVL.Models.Pessoa
+
+@{
+    ViewBag.Title = "Excluir Pessoa";
+}
+<section class="content-header">
+    <h1>
+        Você deseja excluir está pessoa
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Pessoa</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Pessoa</h3>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sNome)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sTelefone)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sTelefone)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sCpf)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sCpf)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sRg)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sRg)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sEmail)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sEmail)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sFoto)
+                        </dt>
+                        <dd>
+                            <img width="100px" height="100px"  class="img-circle" src="@string.Format("../../imagens/foto/" + @Model.sFoto,@Model.sFoto)" alt="@Model.sFoto" />
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="box-footer">
+                            <input type="submit" value="Excluir" class="btn btn-primary" />
+                            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Pessoa")'">Voltar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

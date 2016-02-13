@@ -1,0 +1,104 @@
+﻿@model KVL.Models.Jogador
+
+@{
+    ViewBag.Title = "Transferência de jogador";
+}
+
+<section class="content-header">
+    <h1>
+        Transferência de jogador
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Transferência de jogador</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Jogador</h3>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IDTime, "Time Origem", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("IDTime", null, "Selecione o time", htmlAttributes: new { @class = "form-control", style = "width:200px", @onchange = "ListaTimes()" })
+                                    @Html.ValidationMessageFor(model => model.IDTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Jogador", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.IDJogador,
+           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "sName"),
+                  "Selecione o jogador",
+                  new { @class = "form-control", style = "width:200px" })
+                                    @Html.ValidationMessageFor(m => m.IDJogador, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IDTime, "Time Destino", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("IDTimeDestino", null, "Selecione o time", htmlAttributes: new { @class = "form-control", style = "width:200px" })
+                                    @Html.ValidationMessageFor(model => model.IDTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("JogadorTransferencia", "Jogador")'">Voltar</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function ListaTimes() {
+            var IDTime = $('#IDTime').val();
+            $.ajax({
+                url: '/Jogador/ListaJogadores',
+                type: "GET",
+                dataType: "JSON",
+                data: { IDTime: IDTime },
+                success: function (cities) {
+                    $("#IDJogador").html(""); // clear before appending new list
+
+                    $("#IDJogador").append(
+                    $('<option></option>').val("0").html("Selecione o jogador"));
+
+                    $.each(cities, function (i, city) {
+                        $("#IDJogador").append(
+                            $('<option></option>').val(city.Value).html(city.Text));
+                    });
+                },
+                error: function (cities) {
+                    $("#IDJogador").html("");
+
+                    $("#IDJogador").append(
+                    $('<option></option>').val("0").html("Selecione o jogador"));
+                }
+            });
+        }
+    </script>
+}

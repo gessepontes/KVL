@@ -1,0 +1,100 @@
+﻿@model KVL.Models.Campeonato
+
+@{
+    ViewBag.Title = "Detalhes do campeonato";
+}
+
+
+<section class="content-header">
+    <h1>
+        Detalhes do Campeonato
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Campeonato</a></li>
+        <li class="active">Campeonato</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Campeonato</h3>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sNome)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Campo.sNome)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Campo.sNome)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.iTipoCampeonato)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.iTipoCampeonato)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.dDataInicio)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.dDataInicio)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.dDataFim)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.dDataFim)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.bPreInscricao)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.bPreInscricao)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.bIdaVolta)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.bIdaVolta)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.iQuantidadeTimes)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.iQuantidadeTimes)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary"  onclick="location.href='@Url.Action("Edit", "Campeonato", new { id = Model.IDCampeonato })'">Editar</button>
+                    <button type="button" class="btn btn-default"  onclick="location.href='@Url.Action("Index", "Campeonato")'">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

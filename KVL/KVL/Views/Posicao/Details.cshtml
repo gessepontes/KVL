@@ -1,0 +1,26 @@
+﻿@model KVL.Models.Posicao
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Posicao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sDescricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sDescricao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDPosicao }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,181 @@
+﻿@model KVL.Models.PartidaCampeonato
+
+@{
+    ViewBag.Title = "Nova Partida";
+}
+<section class="content-header">
+    <h1>
+        Nova Partida
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Campeonato</a></li>
+        <li class="active">Partida</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Partida</h3>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="form-group">
+                                @Html.Label("Campeonato", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.Inscrito.PreInscrito.Campeonato.IDCampeonato,
+                  new SelectList(ViewBag.ListaCampeonato, "IDCampeonato", "sNome"),
+                  "Selecione o Campeonato",
+                  new { @class = "form-control", style = "width:200px", @onchange = "ListaTimes()" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.IDInscrito1, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.IDInscrito1,
+           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "sName"),
+                  "Selecione o time",
+                  new { @class = "form-control", style = "width:200px" })
+                                    @Html.ValidationMessageFor(m => m.IDInscrito1, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.IDInscrito2, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.IDInscrito2,
+           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "sName"),
+                  "Selecione o time",
+                  new { @class = "form-control", style = "width:200px" })
+                                    @Html.ValidationMessageFor(m => m.IDInscrito2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.iRodada, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.iRodada, new { htmlAttributes = new { @class = "form-control", style = "width:70px" } })
+                                    @Html.ValidationMessageFor(model => model.iRodada, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.iQntGols1, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.iQntGols1, new { htmlAttributes = new { @class = "form-control", style = "width:70px" } })
+                                    @Html.ValidationMessageFor(model => model.iQntGols1, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.iQntGols2, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.iQntGols2, new { htmlAttributes = new { @class = "form-control", style = "width:70px" } })
+                                    @Html.ValidationMessageFor(model => model.iQntGols2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.dDataPartida, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.dDataPartida, new { htmlAttributes = new { @class = "form-control", style = "width:200px" } })
+                                    @Html.ValidationMessageFor(model => model.dDataPartida, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.sHoraPartida, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.sHoraPartida, new { htmlAttributes = new { @class = "form-control", style = "width:100px" } })
+                                    @Html.ValidationMessageFor(model => model.sHoraPartida, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "PartidaCampeonato")'">Voltar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function ListaTimes() {
+            var IDCampeonato = $('#Inscrito_PreInscrito_Campeonato_IDCampeonato').val();
+            $.ajax({
+                url: '/PartidaCampeonato/ListaTimes',
+                type: "GET",
+                dataType: "JSON",
+                data: { IDCampeonato: IDCampeonato },
+                success: function (cities) {
+                    $("#IDInscrito1").html(""); // clear before appending new list
+                    $("#IDInscrito2").html("");
+
+                    $("#IDInscrito1").append(
+                    $('<option></option>').val("0").html("Selecione o time"));
+
+
+                    $("#IDInscrito2").append(
+                    $('<option></option>').val("0").html("Selecione o time"));
+
+                    $.each(cities, function (i, city) {
+                        $("#IDInscrito1").append(
+                            $('<option></option>').val(city.Value).html(city.Text));
+                        $("#IDInscrito2").append(
+                          $('<option></option>').val(city.Value).html(city.Text));
+                    });
+                },
+                error: function (cities) {
+                    $("#IDInscrito1").html("");
+                    $("#IDInscrito2").html("");
+
+                    $("#IDInscrito1").append(
+                    $('<option></option>').val("0").html("Selecione o time"));
+
+                    $("#IDInscrito2").append(
+                    $('<option></option>').val("0").html("Selecione o time"));
+
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#sHoraPartida').datetimepicker({
+                format: 'HH:mm',
+                showClose: false,
+                showClear: false,
+                toolbarPlacement: 'top',
+                stepping: 15
+            });
+        });
+    </script>
+
+}

@@ -182,7 +182,9 @@
     <Compile Include="Controllers\CampeonatoController.cs" />
     <Compile Include="Controllers\CampeonatoGrupoController.cs" />
     <Compile Include="Controllers\CampoController.cs" />
+    <Compile Include="Controllers\CartaoController.cs" />
     <Compile Include="Controllers\GolAmistosoController.cs" />
+    <Compile Include="Controllers\GolController.cs" />
     <Compile Include="Controllers\HorarioDisponivelController.cs" />
     <Compile Include="Controllers\InscritoController.cs" />
     <Compile Include="Controllers\JogadorController.cs" />
@@ -655,6 +657,16 @@
     <Content Include="Views\PreInscrito\DeleteTime.cshtml" />
     <Content Include="Views\Login\EmailTeste.cshtml" />
     <Content Include="Views\GolAmistoso\Index.cshtml" />
+    <Content Include="Views\Cartao\Create.cshtml" />
+    <Content Include="Views\Cartao\Delete.cshtml" />
+    <Content Include="Views\Cartao\Details.cshtml" />
+    <Content Include="Views\Cartao\Edit.cshtml" />
+    <Content Include="Views\Cartao\Index.cshtml" />
+    <Content Include="Views\Gol\Create.cshtml" />
+    <Content Include="Views\Gol\Delete.cshtml" />
+    <Content Include="Views\Gol\Details.cshtml" />
+    <Content Include="Views\Gol\Edit.cshtml" />
+    <Content Include="Views\Gol\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

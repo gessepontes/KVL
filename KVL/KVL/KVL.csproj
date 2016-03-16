@@ -657,15 +657,8 @@
     <Content Include="Views\PreInscrito\DeleteTime.cshtml" />
     <Content Include="Views\Login\EmailTeste.cshtml" />
     <Content Include="Views\GolAmistoso\Index.cshtml" />
-    <Content Include="Views\Cartao\Create.cshtml" />
-    <Content Include="Views\Cartao\Delete.cshtml" />
-    <Content Include="Views\Cartao\Details.cshtml" />
-    <Content Include="Views\Cartao\Edit.cshtml" />
     <Content Include="Views\Cartao\Index.cshtml" />
-    <Content Include="Views\Gol\Create.cshtml" />
-    <Content Include="Views\Gol\Delete.cshtml" />
-    <Content Include="Views\Gol\Details.cshtml" />
-    <Content Include="Views\Gol\Edit.cshtml" />
+    <Content Include="Views\Gol\Artilharia.cshtml" />
     <Content Include="Views\Gol\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

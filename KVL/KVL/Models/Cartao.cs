@@ -33,7 +33,9 @@ namespace KVL.Models
         [Display(Name = "Vermelho")]
         Vermelho = 2,
         [Display(Name = "Segundo amarelo seguido de vermelho")]
-        AmareloVermelho = 3
+        SegundoAmareloVermelho = 3,
+        [Display(Name = "Vermelho depois de um amarelo")]
+        VermelhoAmarelo = 4
     }
 
 }

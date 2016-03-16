@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using KVL.Context;
 using KVL.Models;
+using PagedList;
+
 
 namespace KVL.Controllers
 {
@@ -16,11 +18,83 @@ namespace KVL.Controllers
         private ModeloDados db = new ModeloDados();
 
         // GET: Cartao
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var cartao = db.Cartao.Include(c => c.JogadorSumula);
+        //    return View(cartao.ToList());
+        //}
+
+        [Authorize(Roles = "Administrador")]
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? IDCampeonato, int? page)
         {
-            var cartao = db.Cartao.Include(c => c.JogadorSumula);
-            return View(cartao.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NomeParam = sortOrder == "Nome" ? "Nome_desc" : "Nome";
+            ViewBag.TimeParm = sortOrder == "Time" ? "Time_desc" : "Time";
+            ViewBag.DataParm = sortOrder == "Data" ? "Data_desc" : "Data";
+            ViewBag.CampeonatoParm = sortOrder == "Campeonato" ? "Campeonato_desc" : "Campeonato";
+            ViewBag.ListaCampeonato = db.Campeonato;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var cartao = db.Cartao.Include(c => c.JogadorSumula).Where(c=>c.iTipoCartao != TipoCartao.Nenhum);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cartao = cartao.Where(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            if (IDCampeonato != null)
+            {
+                cartao = cartao.Where(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
+            }
+
+
+            switch (sortOrder)
+            {
+                case "Nome_desc":
+                    cartao = cartao.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+                    break;
+                case "Nome":
+                    cartao = cartao.OrderBy(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+                    break;
+                case "Time_desc":
+                    cartao = cartao.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
+                    break;
+                case "Time":
+                    cartao = cartao.OrderBy(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
+                    break;
+                case "Data":
+                    cartao = cartao.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Data_desc":
+                    cartao = cartao.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Campeonato":
+                    cartao = cartao.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+                case "Campeonato_desc":
+                    cartao = cartao.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+
+                default:
+                    cartao = cartao.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(cartao.ToPagedList(pageNumber, pageSize));
         }
+
 
         // GET: Cartao/Details/5
         public ActionResult Details(int? id)

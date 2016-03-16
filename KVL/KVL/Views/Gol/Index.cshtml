@@ -11,10 +11,10 @@
 
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-dashboard"></i>  <a href="">Home</a>
+                    <i class="fa fa-dashboard"></i>  <a href="">Campeonato</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-table"></i> Partida do Time
+                    <i class="fa fa-table"></i> Gol
                 </li>
             </ol>
 
@@ -44,7 +44,7 @@
                                     @Html.ActionLink("Jogador", "Index", new { sortOrder = ViewBag.NomeParam })
                                 </th>
                                 <th>
-                                    @Html.ActionLink("Time", "Index", new { sortOrder = ViewBag.TimeParam })
+                                    @Html.ActionLink("Time", "Index", new { sortOrder = ViewBag.TimeParm })
                                 </th>
                                 <th>
                                     Partida
@@ -54,6 +54,9 @@
                                 </th>
                                 <th>
                                     @Html.ActionLink("Campeonato", "Index", new { sortOrder = ViewBag.CampeonatoParm })
+                                </th>
+                                <th>
+                                    Gol
                                 </th>
                             </tr>
                         </thead>
@@ -68,13 +71,16 @@
                                         @Html.DisplayFor(modelItem => item.JogadorSumula.JogadorInscrito.Jogador.Time.sNome)
                                     </td>
                                     <td>
-                                        @*@Html.DisplayFor(modelItem => item.iQntGols2)*@
+                                        @Html.DisplayFor(modelItem => item.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome) X @Html.DisplayFor(modelItem => item.JogadorSumula.Sumula.PartidaCampeonato.Inscrito1.PreInscrito.Time.sNome)
                                     </td>
                                     <td>
                                         @Html.ValueFor(modelItem => item.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida, "{0:dd/MM/yyyy}")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.iQuantidade)
                                     </td>
                                 </tr>
                             }

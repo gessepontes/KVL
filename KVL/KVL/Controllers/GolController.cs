@@ -44,7 +44,7 @@ namespace KVL.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var gols = from s in db.Gol.Include(g=> g.JogadorSumula)
+            var gols = from s in db.Gol.Include(g=> g.JogadorSumula).Where(s=>s.iQuantidade != 0)
                         select s;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -94,6 +94,79 @@ namespace KVL.Controllers
             int pageNumber = (page ?? 1);
             return View(gols.ToPagedList(pageNumber, pageSize));
         }
+
+        [Authorize(Roles = "Administrador")]
+        public ViewResult Artilharia(string sortOrder, string currentFilter, string searchString, int? IDCampeonato, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NomeParam = sortOrder == "Nome" ? "Nome_desc" : "Nome";
+            ViewBag.TimeParm = sortOrder == "Time" ? "Time_desc" : "Time";
+            ViewBag.DataParm = sortOrder == "Data" ? "Data_desc" : "Data";
+            ViewBag.CampeonatoParm = sortOrder == "Campeonato" ? "Campeonato_desc" : "Campeonato";
+            ViewBag.ListaCampeonato = db.Campeonato;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var gols = from s in db.Gol.Include(g => g.JogadorSumula).Where(s => s.iQuantidade != 0)
+                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                gols = gols.Where(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            if (IDCampeonato != null)
+            {
+                gols = gols.Where(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
+            }
+
+
+            switch (sortOrder)
+            {
+                case "Nome_desc":
+                    gols = gols.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+                    break;
+                case "Nome":
+                    gols = gols.OrderBy(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+                    break;
+                case "Time_desc":
+                    gols = gols.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
+                    break;
+                case "Time":
+                    gols = gols.OrderBy(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
+                    break;
+                case "Data":
+                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Data_desc":
+                    gols = gols.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Campeonato":
+                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+                case "Campeonato_desc":
+                    gols = gols.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+
+                default:
+                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(gols.ToPagedList(pageNumber, pageSize));
+        }
+
 
 
         // GET: Gol/Details/5

@@ -116,51 +116,22 @@ namespace KVL.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var gols = from s in db.Gol.Include(g => g.JogadorSumula).Where(s => s.iQuantidade != 0)
-                       select s;
+            //var gols = from s in db.Gol.Include(g => g.JogadorSumula).Where(s => s.iQuantidade != 0)
+            //           select s;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                gols = gols.Where(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome.ToUpper().Contains(searchString.ToUpper()));
-            }
+            var gols = db.Gol.GroupBy(g => g.JogadorSumula.IDJogadorInscrito).ToList();
+                       
 
-            if (IDCampeonato != null)
-            {
-                gols = gols.Where(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
-            }
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    gols = gols.Where(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome.ToUpper().Contains(searchString.ToUpper()));
+            //}
 
-
-            switch (sortOrder)
-            {
-                case "Nome_desc":
-                    gols = gols.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
-                    break;
-                case "Nome":
-                    gols = gols.OrderBy(s => s.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
-                    break;
-                case "Time_desc":
-                    gols = gols.OrderByDescending(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
-                    break;
-                case "Time":
-                    gols = gols.OrderBy(s => s.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.Time.sNome);
-                    break;
-                case "Data":
-                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
-                    break;
-                case "Data_desc":
-                    gols = gols.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
-                    break;
-                case "Campeonato":
-                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
-                    break;
-                case "Campeonato_desc":
-                    gols = gols.OrderByDescending(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
-                    break;
-
-                default:
-                    gols = gols.OrderBy(s => s.JogadorSumula.Sumula.PartidaCampeonato.dDataPartida);
-                    break;
-            }
+            //if (IDCampeonato != null)
+            //{
+            //    gols = gols.Where(s => s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
+            //}
+            
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);

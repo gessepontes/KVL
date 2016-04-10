@@ -378,6 +378,8 @@
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Config\appSettings.config" />
+    <Content Include="Config\connectionString.config" />
     <None Include="fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Properties\PublishProfiles\campeonato.pubxml" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -658,8 +660,10 @@
     <Content Include="Views\Login\EmailTeste.cshtml" />
     <Content Include="Views\GolAmistoso\Index.cshtml" />
     <Content Include="Views\Cartao\Index.cshtml" />
-    <Content Include="Views\Gol\Artilharia.cshtml" />
     <Content Include="Views\Gol\Index.cshtml" />
+    <Content Include="Views\Gol\Artilharia.cshtml" />
+    <Content Include="Views\Campeonato\Artilharia.cshtml" />
+    <Content Include="Views\Campeonato\_ArtilhariaDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

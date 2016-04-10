@@ -18,8 +18,11 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    @using (Html.BeginForm("Index", "Sumula", FormMethod.Post))
+                    @using (Html.BeginForm("IndexUsuario", "Sumula", FormMethod.Post))
                     {
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="SearchString" id="SearchString">
+                        </div>
                         <div class="form-group">
                             @Html.DropDownList("IDCampeonato",
                   new SelectList(ViewBag.ListaCampeonato, "IDCampeonato", "sNome"),
@@ -86,7 +89,7 @@
                                         @Html.DisplayFor(modelItem => item.PartidaCampeonato.iRodada)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("Create", "Sumula",new { id = item.IDSumula })">
+                                        <a href="@Url.Action("CreateUsuario", "Sumula",new { id = item.IDSumula })">
                                             <img src="~/Imagens/table_icon/table_icon_search.png" />
                                         </a>
                                     </td>
@@ -96,7 +99,7 @@
                         </tbody>
                     </table>
                     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { sortOrder = ViewBag.CurrentSort, IDCampeonato = ViewBag.IDCampeonato, searchString = ViewBag.CurrentFilter, page }))
+                    @Html.PagedListPager(Model, page => Url.Action("IndexUsuario", new { sortOrder = ViewBag.CurrentSort, IDCampeonato = ViewBag.IDCampeonato, searchString = ViewBag.CurrentFilter, page }))
                 </div>
             </div>
             <!-- /.panel-body -->

@@ -168,8 +168,20 @@
                     else if (User.IsInRole("Usuario"))
                     {
                         <li><a href="@Url.Action("PerfilTime", "Time")"><i class="fa fa-laptop"></i> <span>Gerênciamento do Perfil</span></a></li>
+
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i> <span>Campeonato</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="@Url.Action("Artilharia", "Campeonato")"><i class="fa fa-circle-o"></i> Artilharia</a></li>
+                                <li><a href="@Url.Action("IndexUsuario", "Sumula")"><i class="fa fa-book"></i> <span>Súmulas</span></a></li>
+                            </ul>
+                        </li>
+
                         <li><a href="@Url.Action("PartidasTime", "Time")"><i class="fa fa-bars"></i> <span>Partidas do Time</span></a></li>
-                        <li><a href="@Url.Action("MarcaPartida", "PartidaAmistosa")"><i class="fa fa-adjust"></i><span>Marcar Amistosos</span></a></li>
+                        @*<li><a href="@Url.Action("MarcaPartida", "PartidaAmistosa")"><i class="fa fa-adjust"></i><span>Marcar Amistosos</span></a></li>*@
                         <li><a href="@Url.Action("IndexTime", "PreInscrito")"><i class="fa fa-book"></i><span>Pré-Inscrição</span></a></li>
                     }
                 </ul>

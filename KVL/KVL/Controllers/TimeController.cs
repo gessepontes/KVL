@@ -361,6 +361,11 @@ namespace KVL.Controllers
         {
             int IDTime = Convert.ToInt16(Session["IDTime"]);
 
+            if (IDTime == 0)
+            {
+                return RedirectToAction("Index","Home").ComMensagem("Você não possui time cadastrado.", "alert-danger");
+            }
+
             Time time = db.Time.Find(IDTime);
             ViewBag.Jogadores = db.Jogador.Where(p => p.IDTime == time.IDTime && p.bAtivo == true).OrderBy(p => p.Pessoa.sNome);
             ViewBag.HorarioDisponivel = db.HorarioDisponivel.Where(p => p.iCodTime == time.IDTime).OrderBy(p => p.iDiaSemana);

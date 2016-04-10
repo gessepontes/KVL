@@ -25,7 +25,7 @@ namespace KVL.Controllers
         //}
 
 
-        public ViewResult Index(string sortOrder, int? IDCampeonato, int? page)
+        public ViewResult Index(string sortOrder, int? IDCampeonato, string searchString, int? page)
         {
 
             ViewBag.ListaCampeonato = db.Campeonato;
@@ -42,6 +42,66 @@ namespace KVL.Controllers
             if (IDCampeonato != null)
             {
                 sumula = sumula.Where(s => s.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                sumula = sumula.Where(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome.ToUpper().Contains(searchString.ToUpper()) || s.PartidaCampeonato.Inscrito1.PreInscrito.Time.sNome.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            switch (sortOrder)
+            {
+                case "Nome_desc":
+                    sumula = sumula.OrderByDescending(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome);
+                    break;
+                case "Data":
+                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Data_desc":
+                    sumula = sumula.OrderByDescending(s => s.PartidaCampeonato.dDataPartida);
+                    break;
+                case "Campeonato":
+                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+                case "Campeonato_desc":
+                    sumula = sumula.OrderByDescending(s => s.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
+                    break;
+                default:
+                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(sumula.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ViewResult IndexUsuario(string sortOrder, int? IDCampeonato, string searchString, int? page)
+        {
+
+            ViewBag.ListaCampeonato = db.Campeonato;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NomeParam = string.IsNullOrEmpty(sortOrder) ? "Nome_desc" : "";
+            ViewBag.DataParm = sortOrder == "Data" ? "Data_desc" : "Data";
+            ViewBag.CampeonatoParm = sortOrder == "Campeonato" ? "Campeonato_desc" : "Campeonato";
+
+            ViewBag.IDCampeonato = IDCampeonato;
+
+            var sumula = from s in db.Sumula.Include(s => s.PartidaCampeonato)
+                         select s;
+
+            if (IDCampeonato != null)
+            {
+                sumula = sumula.Where(s => s.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
+            }
+            
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                sumula = sumula.Where(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome.ToUpper().Contains(searchString.ToUpper()) || s.PartidaCampeonato.Inscrito1.PreInscrito.Time.sNome.ToUpper().Contains(searchString.ToUpper()));
             }
 
 
@@ -73,7 +133,6 @@ namespace KVL.Controllers
         }
 
 
-
         // GET: Sumula/Create
         public ActionResult Create(int? id)
         {
@@ -95,6 +154,29 @@ namespace KVL.Controllers
             jogadoresInscritos(sumula.PartidaCampeonato.IDInscrito1, sumula.PartidaCampeonato.IDInscrito2, id);
             return View(sumula);
         }
+
+        // GET: Sumula/Create
+        public ActionResult CreateUsuario(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Sumula sumula = db.Sumula.Find(id);
+
+            if (sumula == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.iQntGols1 = sumula.PartidaCampeonato.iQntGols1;
+            ViewBag.iQntGols2 = sumula.PartidaCampeonato.iQntGols2;
+
+            jogadoresInscritos(sumula.PartidaCampeonato.IDInscrito1, sumula.PartidaCampeonato.IDInscrito2, id);
+            return View(sumula);
+        }
+
 
         public void jogadoresInscritos(int IDInscrito1, int IDInscrito2, int? id)
         {
@@ -336,6 +418,7 @@ namespace KVL.Controllers
 
         }
 
+
         public ActionResult JogadorSumula(int? id, int? IDSumula)
         {
             if (id == null)
@@ -369,6 +452,42 @@ namespace KVL.Controllers
             }
 
             return PartialView("_jogadorSumula", jogadorSumulaGolCartao);
+        }
+
+
+        public ActionResult JogadorSumulaUsuario(int? id, int? IDSumula)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var jogadorSumulaGolCartao = db.JogadorSumula
+                .Join(db.Cartao
+                      , c => c.IDJogadorSumula
+                      , cm => cm.iCodJogadorSumula
+                      , (c, cm) => new { c, cm })
+                .Join(db.Gol
+                      , ccm => ccm.cm.iCodJogadorSumula
+                      , t => t.iCodJogadorSumula
+                      , (ccm, t) => new JogadorSumulaGolCartao
+                      {
+                          IDJogadorInscrito = ccm.c.IDJogadorInscrito,
+                          IDSumula = ccm.c.IDSumula,
+                          sNome = ccm.c.JogadorInscrito.Jogador.Pessoa.sNome,
+                          iCartao = ccm.cm.iTipoCartao,
+                          IDJogadorSumula = ccm.c.IDJogadorSumula,
+                          iGol = t.iQuantidade ?? 0
+                      }).Where(p => p.IDJogadorInscrito == id && p.IDSumula == IDSumula).FirstOrDefault();
+
+            ViewBag.QuantidadeGols = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            if (jogadorSumulaGolCartao == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView("_jogadorSumulaUsuario", jogadorSumulaGolCartao);
         }
 
         [HttpPost]

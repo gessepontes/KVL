@@ -664,6 +664,9 @@
     <Content Include="Views\Gol\Artilharia.cshtml" />
     <Content Include="Views\Campeonato\Artilharia.cshtml" />
     <Content Include="Views\Campeonato\_ArtilhariaDetails.cshtml" />
+    <Content Include="Views\Sumula\_JogadorSumulaUsuario.cshtml" />
+    <Content Include="Views\Sumula\CreateUsuario.cshtml" />
+    <Content Include="Views\Sumula\IndexUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -675,6 +678,9 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

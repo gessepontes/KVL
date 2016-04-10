@@ -10,7 +10,7 @@ using System;
 
 namespace KVL.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Usuario")]
     public class CampeonatoController : Controller
     {
         private ModeloDados db = new ModeloDados();
@@ -67,6 +67,7 @@ namespace KVL.Controllers
             return View(campeonatos.ToPagedList(pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Administrador,Usuario")]
         public ViewResult Artilharia(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -112,6 +113,7 @@ namespace KVL.Controllers
             return View(campeonatos.ToPagedList(pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Administrador,Usuario")]
         public ActionResult ArtilhariaDetails(int? id)
         {
             if (id == null)

@@ -1,0 +1,97 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<KVL.Models.Campeonato>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i>  <a href="">Campeonato</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-table"></i> Artilharia
+                </li>
+            </ol>            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    @using (Html.BeginForm("Artilharia", "Campeonato", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="SearchString" id="SearchString">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Pesquisar" class="btn btn-default" />
+                        </div>
+                    }
+                    <hr />
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.ActionLink("Nome", "Artilharia", new { sortOrder = ViewBag.NomeParam })
+                                </th>
+                                <th>
+                                    Tipo de Campeonato
+                                </th>
+                                <th>
+                                    Campo
+                                </th>
+                                <th>
+                                    @Html.ActionLink("Data Inicio", "Artilharia", new { sortOrder = ViewBag.DtInicioParam })
+                                </th>
+                                <th>
+                                    Data Fim
+                                </th>
+                                <td>
+                                    Ida e Volta
+                                </td>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.sNome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.iTipoCampeonato)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Campo.sNome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.dDataInicio)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.dDataFim)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.bIdaVolta)
+                                    </td>
+                                    <td>                                     
+                                        <a href="@Url.Action("ArtilhariaDetails", "Campeonato",new { id = item.IDCampeonato })" class="modal-link users-list-name">
+                                            <img src="~/Imagens/table_icon/table_icon_search.png" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Artilharia", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

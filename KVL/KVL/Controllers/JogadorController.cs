@@ -84,8 +84,8 @@ namespace KVL.Controllers
 
         public ActionResult JogadorTransferencia()
         {
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome");
-            ViewBag.IDTimeDestino = new SelectList(db.Time, "IDTime", "sNome");
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome").OrderBy(p=>p.Text);
+            ViewBag.IDTimeDestino = new SelectList(db.Time, "IDTime", "sNome").OrderBy(p => p.Text);
 
             return View();
         }
@@ -94,8 +94,8 @@ namespace KVL.Controllers
         public ActionResult JogadorTransferencia(int? IDTime, int? IDJogador, int? IDTimeDestino)
         {
 
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome");
-            ViewBag.IDTimeDestino = new SelectList(db.Time, "IDTime", "sNome");
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome").OrderBy(p => p.Text);
+            ViewBag.IDTimeDestino = new SelectList(db.Time, "IDTime", "sNome").OrderBy(p => p.Text);
 
             if (IDTime == null || IDJogador == null || IDTimeDestino == null)
             {
@@ -156,9 +156,9 @@ namespace KVL.Controllers
         // GET: Jogador/Create
         public ActionResult Create()
         {
-            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome");
-            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao");
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome");
+            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome").OrderBy(p => p.Text);
+            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao").OrderBy(p => p.Text);
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome").OrderBy(p => p.Text);
             return View();
         }
 
@@ -177,9 +177,9 @@ namespace KVL.Controllers
                 return RedirectToAction("Index").ComMensagem("Operação realizada com sucesso.", "alert-success");
             }
 
-            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa);
-            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao);
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime);
+            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa).OrderBy(p => p.Text);
+            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao).OrderBy(p => p.Text);
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime).OrderBy(p => p.Text);
             return View(jogador);
         }
 
@@ -195,9 +195,9 @@ namespace KVL.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa);
-            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao);
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime);
+            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa).OrderBy(p => p.Text);
+            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao).OrderBy(p => p.Text);
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime).OrderBy(p => p.Text);
             return View(jogador);
         }
 
@@ -216,9 +216,9 @@ namespace KVL.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index").ComMensagem("Operação realizada com sucesso.", "alert-success");
             }
-            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa);
-            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao);
-            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime);
+            ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", jogador.IDPessoa).OrderBy(p => p.Text);
+            ViewBag.IDPosicao = new SelectList(db.Posicao, "IDPosicao", "sDescricao", jogador.IDPosicao).OrderBy(p => p.Text);
+            ViewBag.IDTime = new SelectList(db.Time, "IDTime", "sNome", jogador.IDTime).OrderBy(p => p.Text);
             return View(jogador);
         }
 
@@ -257,6 +257,7 @@ namespace KVL.Controllers
             }
 
         }
+
 
         protected override void Dispose(bool disposing)
         {

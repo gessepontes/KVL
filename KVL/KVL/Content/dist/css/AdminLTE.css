@@ -2245,7 +2245,7 @@ a:focus {
 }
 .btn-danger {
   background-color: #dd4b39;
-  border-color: #d73925;
+  /*border-color: #d73925;*/
 }
 .btn-danger:hover,
 .btn-danger:active,
@@ -2383,13 +2383,13 @@ a:focus {
   color: #fff;
   text-decoration: underline;
 }
-.alert-success {
+/*.alert-success {
   border-color: #008d4c;
-}
-.alert-danger,
+}*/
+/*.alert-danger,
 .alert-error {
   border-color: #d73925;
-}
+}*/
 .alert-warning {
   border-color: #e08e0b;
 }

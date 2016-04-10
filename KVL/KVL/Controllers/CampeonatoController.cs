@@ -67,6 +67,81 @@ namespace KVL.Controllers
             return View(campeonatos.ToPagedList(pageNumber, pageSize));
         }
 
+        public ViewResult Artilharia(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NomeParam = string.IsNullOrEmpty(sortOrder) ? "Nome_desc" : "";
+            ViewBag.DtInicioParam = sortOrder == "Dt_asc" ? "Dt_desc" : "Dt_asc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var campeonatos = from s in db.Campeonato.Include(c => c.Campo)
+                              select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                campeonatos = campeonatos.Where(s => s.sNome.ToUpper().Contains(searchString.ToUpper()));
+            }
+            switch (sortOrder)
+            {
+                case "Nome_desc":
+                    campeonatos = campeonatos.OrderByDescending(s => s.sNome);
+                    break;
+                case "Dt_desc":
+                    campeonatos = campeonatos.OrderByDescending(s => s.dDataInicio);
+                    break;
+                case "Dt_asc":
+                    campeonatos = campeonatos.OrderBy(s => s.dDataInicio);
+                    break;
+                default:
+                    campeonatos = campeonatos.OrderBy(s => s.sNome);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(campeonatos.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult ArtilhariaDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.CampeonatoNome = db.Campeonato.Find(id).sNome;
+
+            var result = from o in db.Gol
+                     where o.JogadorSumula.JogadorInscrito.Inscrito.PreInscrito.IDCampeonato == id
+                     let k = new
+                     {
+                         sNome = o.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome,
+                         sTime = o.JogadorSumula.JogadorInscrito.Jogador.Time.sNome,
+                     }
+                     group o by k into t
+                     select new Artilharia
+                     {
+                         sNome = t.Key.sNome,
+                         sTime = t.Key.sTime,
+                         iQuantidade = t.Sum(p => p.iQuantidade) ?? 0
+                     };
+
+
+            ViewBag.ArtilhariaDetails = result.OrderByDescending(p=>p.iQuantidade);
+
+            return PartialView("_ArtilhariaDetails");
+        }
+
 
         // GET: Campeonato/Details/5
         public ActionResult Details(int? id)

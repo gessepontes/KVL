@@ -43,26 +43,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    @if (item.IDGol == 0)
-                                    {
-                                        using (Html.BeginForm("Create", "GolAmistoso"))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <td align="left">@item.Jogador.Pessoa.sNome</td>
-                                            <td>
-                                                @Html.DropDownList("iQuantidade",
-                   new SelectList(ViewBag.QuantidadeGols),
-                   new { @class = "form-control", style = "width:100px" })
-                                            </td>
-                                            <td>
-                                                <input type="hidden" id="IDJogador" name="IDJogador" value="@item.IDJogador" />
-                                                <input type="hidden" id="IDPartida" name="IDPartida" value="@ViewBag.IDPartida" />
-                                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></button>
-                                            </td>
-                                        }
-
-                                    }
-                                    else if (ViewBag.iTipoPartida == 1)
+                                    @if (ViewBag.iTipoPartida == 1)
                                     {
                                         <th align="left">@item.Jogador.Pessoa.sNome</th>
                                         <th>
@@ -75,20 +56,44 @@
                                     }
                                     else
                                     {
-                                        using (Html.BeginForm("Delete", "GolAmistoso"))
+                                        if (item.IDGol == 0)
                                         {
-                                            @Html.AntiForgeryToken()
-                                            <th align="left">@item.Jogador.Pessoa.sNome</th>
-                                            <th>
-                                                <input type="text" id="iQuantidade" name="iQuantidade" value="@item.iQuantidade" class="form-control" size="1" disabled="disabled" />
-                                            </th>
-                                                        <th>
-                                                            <input type="hidden" id="IDGol" name="IDGol" value="@item.IDGol" />
-                                                            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-minus-sign"></span></button>
-                                                        </th>
+                                            using (Html.BeginForm("Create", "GolAmistoso"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <td align="left">@item.Jogador.Pessoa.sNome</td>
+                                                <td>
+                                                    @Html.DropDownList("iQuantidade",
+                   new SelectList(ViewBag.QuantidadeGols),
+                   new { @class = "form-control", style = "width:100px" })
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" id="IDJogador" name="IDJogador" value="@item.IDJogador" />
+                                                    <input type="hidden" id="IDPartida" name="IDPartida" value="@ViewBag.IDPartida" />
+                                                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                                                </td>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("Delete", "GolAmistoso"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <th align="left">@item.Jogador.Pessoa.sNome</th>
+                                                <th>
+                                                    <input type="text" id="iQuantidade" name="iQuantidade" value="@item.iQuantidade" class="form-control" size="1" disabled="disabled" />
+                                                </th>
+                                                <th>
+                                                    <input type="hidden" id="IDGol" name="IDGol" value="@item.IDGol" />
+                                                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                                                </th>
+                                            }
+
                                         }
 
                                     }
+
                                 </tr>
                             }
                         </tbody>

@@ -42,6 +42,7 @@ namespace KVL.Models
         public int iNumCamisa { get; set; }
         public int IDJogadorInscrito { get; set; }
         public int IDTimeInscrito { get; set; }
+        public int IDSumula { get; set; }
         public string sNome { get; set; }
     }
 

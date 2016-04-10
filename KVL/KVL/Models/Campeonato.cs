@@ -70,4 +70,12 @@ namespace KVL.Models
         [Display(Name = "Pontos Corridos")]
         PontosCorridos = 3
     }
+
+
+    public class Artilharia
+    {
+        public string sNome { get; set; }
+        public int iQuantidade { get; set; }
+        public string sTime { get; set; }
+    }
 }

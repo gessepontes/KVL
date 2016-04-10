@@ -48,7 +48,7 @@ namespace KVL.Models
         [Display(Name = "Telefone")]
         public string sTelefone { get; set; }
 
-        [Required(ErrorMessage = "{0} é um campo obrigatório.")]
+        //[Required(ErrorMessage = "{0} é um campo obrigatório.")]
         [StringLength(50)]
         [Display(Name = "Cpf")]
         public string sCpf { get; set; }
@@ -57,6 +57,7 @@ namespace KVL.Models
         public string cSexo { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "{0} é um campo obrigatório.")]
         [Display(Name = "Rg")]
         public string sRg { get; set; }
 

@@ -97,7 +97,7 @@ namespace KVL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!isCPFCNPJ(pessoa.sCpf, false))
+                if (!isCPFCNPJ(pessoa.sCpf, true))
                 {
                     return View(pessoa).ComMensagem("Cpf inválido.", "alert-warning");
                 }
@@ -144,7 +144,7 @@ namespace KVL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!isCPFCNPJ(pessoa.sCpf, false))
+                if (!isCPFCNPJ(pessoa.sCpf, true))
                 {
                     return View(pessoa).ComMensagem("Cpf inválido.", "alert-warning");
                 }

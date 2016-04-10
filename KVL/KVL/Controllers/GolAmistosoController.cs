@@ -69,7 +69,7 @@ namespace KVL.Controllers
 
             ViewBag.IDPartida = IDPartida;
             ViewBag.iTipoPartida = iTipoPartida;
-            ViewBag.QuantidadeGols = new int[] { 0, 1, 2, 3, 5, 6, 7, 8, 9 };
+            ViewBag.QuantidadeGols = new int[] { 0, 1, 2, 3,4, 5, 6, 7, 8, 9 };
             return View(jogadorGol);
         }
 
@@ -100,6 +100,10 @@ namespace KVL.Controllers
             foreach (var item in QntGols)
             {
                 iQntGols = iQntGols + item.iQuantidade ;
+            }
+
+            if (golAmistoso.iQuantidade == 0) {
+                return RedirectToAction("Index", "GolAmistoso", new { IDTime = jogador.IDTime, IDPartida = golAmistoso.IDPartida, iTipoPartida = 0 }).ComMensagem("A quantidade de gols inseridas devem ser maior que zero.", "alert-warning");
             }
 
             if (golAmistoso.iQuantidade + iQntGols <= iQntGolsPartida)

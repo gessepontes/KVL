@@ -81,6 +81,7 @@ namespace KVL.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Sumula sumula = db.Sumula.Find(id);
 
             if (sumula == null)
@@ -91,14 +92,14 @@ namespace KVL.Controllers
             ViewBag.iQntGols1 = sumula.PartidaCampeonato.iQntGols1;
             ViewBag.iQntGols2 = sumula.PartidaCampeonato.iQntGols2;
 
-            jogadoresInscritos(sumula.PartidaCampeonato.IDInscrito1, sumula.PartidaCampeonato.IDInscrito2);
+            jogadoresInscritos(sumula.PartidaCampeonato.IDInscrito1, sumula.PartidaCampeonato.IDInscrito2, id);
             return View(sumula);
         }
 
-        public void jogadoresInscritos(int IDInscrito1, int IDInscrito2)
+        public void jogadoresInscritos(int IDInscrito1, int IDInscrito2, int? id)
         {
             ViewBag.JogadorInscrito = db.JogadorInscrito
-                .GroupJoin(db.JogadorSumula
+                .GroupJoin(db.JogadorSumula.Where(p => p.IDSumula == id)
                 , p => p.IDJogadorInscrito
                 , c => c.IDJogadorInscrito
                 , (p, c) => new { inscritos = p, sumulas = c })
@@ -113,7 +114,7 @@ namespace KVL.Controllers
 
 
             ViewBag.JogadorInscrito2 = db.JogadorInscrito
-                .GroupJoin(db.JogadorSumula
+                .GroupJoin(db.JogadorSumula.Where(p => p.IDSumula == id)
                 , p => p.IDJogadorInscrito
                 , c => c.IDJogadorInscrito
                 , (p, c) => new { inscritos = p, sumulas = c })
@@ -123,7 +124,7 @@ namespace KVL.Controllers
                     iNumCamisa = sumulas.iNumCamisa ?? 0,
                     sNome = s.inscritos.Jogador.Pessoa.sNome.ToUpper(),
                     IDJogadorInscrito = s.inscritos.IDJogadorInscrito,
-                    IDTimeInscrito = s.inscritos.IDInscrito
+                    IDTimeInscrito = s.inscritos.IDInscrito,
                 }).Where(p => p.IDTimeInscrito == IDInscrito2).ToList();
         }
 
@@ -255,7 +256,7 @@ namespace KVL.Controllers
                         {
                             if (IDInscrito != null)
                             {
-                                if (db.JogadorSumula.Where(p => p.iNumCamisa == jogadorSumula.iNumCamisa && p.Sumula.PartidaCampeonato.IDInscrito1 == IDInscrito).ToList().Count > 0)
+                                if (db.JogadorSumula.Where(p => p.iNumCamisa == jogadorSumula.iNumCamisa && p.Sumula.PartidaCampeonato.IDInscrito1 == IDInscrito && p.IDSumula == jogadorSumula.IDSumula).ToList().Count > 0)
                                 {
                                     return RedirectToAction("Create/" + jogadorSumula.IDSumula).ComMensagem("Já existe jogador cadastrado com esta numeração.", "alert-warning");
                                 }
@@ -320,6 +321,12 @@ namespace KVL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedJogador(int IDJogadorInscrito, int IDSumula)
         {
+            foreach (var cartao in db.Cartao.Where(p => p.JogadorSumula.IDJogadorInscrito == IDJogadorInscrito && p.JogadorSumula.IDSumula == IDSumula))
+                db.Cartao.Remove(cartao);
+
+            foreach (var gol in db.Gol.Where(p => p.JogadorSumula.IDJogadorInscrito == IDJogadorInscrito && p.JogadorSumula.IDSumula == IDSumula))
+                db.Gol.Remove(gol);
+
             JogadorSumula jogadorSumula = db.JogadorSumula.Where(p => p.IDSumula == IDSumula && p.IDJogadorInscrito == IDJogadorInscrito).FirstOrDefault();
             db.JogadorSumula.Remove(jogadorSumula);
             db.SaveChanges();
@@ -354,7 +361,7 @@ namespace KVL.Controllers
                           iGol = t.iQuantidade ?? 0
                       }).Where(p => p.IDJogadorInscrito == id && p.IDSumula == IDSumula).FirstOrDefault();
 
-            ViewBag.QuantidadeGols = new int[] { 0, 1, 2, 3, 5, 6, 7, 8, 9 };
+            ViewBag.QuantidadeGols = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             if (jogadorSumulaGolCartao == null)
             {

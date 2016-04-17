@@ -1,0 +1,119 @@
+﻿@model KVL.Models.Cartao
+
+@{
+    ViewBag.Title = "Suspensos";
+}
+<section class="content-header">
+    <h1>
+        Suspensos
+        <small>Preview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Campeonato</a></li>
+        <li class="active">Suspensos</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Visualização dos Suspensos</h3>
+
+                    @using (Html.BeginForm("SuspensoDetails", "Cartao", FormMethod.Post, htmlAttributes: new { @id = "SuspensoDetails" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="form-group">
+                                @Html.Label("Campeonato", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("IDCampeonato",
+                  new SelectList(ViewBag.ListaCampeonato, "IDCampeonato", "sNome"),
+                  "Selecione o Campeonato",
+                  new { @class = "form-control", style = "width:300px" , @onchange = "ListaRodadas()" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Rodada", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("IDRodada",
+                                    new SelectList(Enumerable.Empty<SelectListItem>()),
+                                           "Selecione a Rodada",
+                                           new { @class = "form-control", style = "width:300px" })
+                                </div>
+                            </div>
+
+        
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="button" value="Visualizar Suspensos" class="modal-link users-list-name" data-dismiss="modal" onclick="validar()" />
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function ListaRodadas() {
+            var IDCampeonato = $('#IDCampeonato').val();
+            debugger;
+            $.ajax({
+                url: '/Cartao/ListaRodada',
+                type: "GET",
+                dataType: "JSON",
+                data: { IDCampeonato: IDCampeonato },
+                success: function (rodadas) {
+                    $("#IDRodada").html(""); // clear before appending new list
+
+                    $("#IDRodada").append(
+                    $('<option></option>').val("0").html("Selecione a Rodada"));
+
+                    $.each(rodadas, function (i, rodada) {
+                        $("#IDRodada").append(
+                            $('<option></option>').val(rodada).html(rodada));
+                    });
+                },
+                error: function (cities) {
+                    $("#IDRodada").html("");
+
+                    $("#IDRodada").append(
+                    $('<option></option>').val("0").html("Selecione a Rodada"));
+                }
+            });
+        }
+
+
+        function validar() {
+            if (document.getElementById('IDCampeonato').value == "") {
+                alert('Campeonato é um campo obrigatorio.');
+                return false;
+            }
+
+            if (document.getElementById('IDRodada').value == "" || document.getElementById('IDRodada').value == 0) {
+                alert('Rodada é um campo obrigatorio.');
+                return false;
+            }
+
+            document.getElementById('SuspensoDetails').submit();
+        }
+    </script>
+}

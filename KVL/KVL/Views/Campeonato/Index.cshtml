@@ -72,11 +72,11 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Campo.sNome)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.dDataInicio)
+                                    <td>                                        
+                                        @Html.ValueFor(modelItem => item.dDataFim, "{0:dd/MM/yyyy}")
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.dDataFim)
+                                        @Html.ValueFor(modelItem => item.dDataFim, "{0:dd/MM/yyyy}")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.bIdaVolta)

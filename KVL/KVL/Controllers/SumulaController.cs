@@ -16,14 +16,7 @@ namespace KVL.Controllers
     public class SumulaController : Controller
     {
         private ModeloDados db = new ModeloDados();
-
-        // GET: Sumula
-        //public ActionResult Index()
-        //{
-        //    var sumula = db.Sumula.Include(s => s.PartidaCampeonato);
-        //    return View(sumula.ToList());
-        //}
-
+       
 
         public ViewResult Index(string sortOrder, int? IDCampeonato, string searchString, int? page)
         {
@@ -69,7 +62,7 @@ namespace KVL.Controllers
                     sumula = sumula.OrderByDescending(s => s.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
                     break;
                 default:
-                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome);
+                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome).OrderBy(s => s.PartidaCampeonato.dDataPartida).OrderBy(s => s.PartidaCampeonato.iRodada);
                     break;
             }
 
@@ -96,7 +89,7 @@ namespace KVL.Controllers
             {
                 sumula = sumula.Where(s => s.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato);
             }
-            
+
             ViewBag.CurrentFilter = searchString;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -123,7 +116,7 @@ namespace KVL.Controllers
                     sumula = sumula.OrderByDescending(s => s.PartidaCampeonato.Inscrito.PreInscrito.Campeonato.sNome);
                     break;
                 default:
-                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome);
+                    sumula = sumula.OrderBy(s => s.PartidaCampeonato.Inscrito.PreInscrito.Time.sNome).OrderBy(s => s.PartidaCampeonato.dDataPartida).OrderBy(s => s.PartidaCampeonato.iRodada);
                     break;
             }
 

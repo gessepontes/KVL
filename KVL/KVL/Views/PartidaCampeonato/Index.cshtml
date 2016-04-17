@@ -87,7 +87,7 @@
                                         @Html.DisplayFor(modelItem => item.Inscrito1.PreInscrito.Time.sNome)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.dDataPartida)
+                                        @Html.ValueFor(modelItem => item.dDataPartida, "{0:dd/MM/yyyy}")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Inscrito.PreInscrito.Campeonato.sNome)

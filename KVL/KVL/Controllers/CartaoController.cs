@@ -17,13 +17,6 @@ namespace KVL.Controllers
     {
         private ModeloDados db = new ModeloDados();
 
-        // GET: Cartao
-        //public ActionResult Index()
-        //{
-        //    var cartao = db.Cartao.Include(c => c.JogadorSumula);
-        //    return View(cartao.ToList());
-        //}
-
         [Authorize(Roles = "Administrador")]
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? IDCampeonato, int? page)
         {
@@ -45,7 +38,7 @@ namespace KVL.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var cartao = db.Cartao.Include(c => c.JogadorSumula).Where(c=>c.iTipoCartao != TipoCartao.Nenhum);
+            var cartao = db.Cartao.Include(c => c.JogadorSumula).Where(c => c.iTipoCartao != TipoCartao.Nenhum);
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -93,6 +86,59 @@ namespace KVL.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(cartao.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        private int[] QuantidadeRodadas(int iCodCampeonato)
+        {
+            int quantidade = 0;
+            quantidade = db.Inscrito.Where(p => p.PreInscrito.IDCampeonato == iCodCampeonato).Count();
+
+            if (quantidade == 0)
+            {
+                quantidade = 1;
+            }
+
+            int[] lista = new int[quantidade - 1];
+
+            for (int i = 0; i < quantidade - 1; i++)
+            {
+                lista[i] = i + 1;
+            }
+
+            return lista;
+        }
+
+        public ActionResult Suspenso()
+        {
+            ViewBag.ListaCampeonato = db.Campeonato;
+            return View();
+        }
+
+        public ActionResult SuspensoDetails(int IDRodada, int IDCampeonato)
+        {
+
+            ViewBag.CampeonatoNome = db.Campeonato.Find(IDCampeonato).sNome;
+            ViewBag.Rodada = IDRodada;
+
+            IDRodada = IDRodada - 1;
+            ViewBag.SuspensoDetails = db.Cartao
+                .Where(p => p.iTipoCartao == TipoCartao.SegundoAmareloVermelho || p.iTipoCartao == TipoCartao.Vermelho || p.iTipoCartao == TipoCartao.VermelhoAmarelo)
+                .Where(s=>s.JogadorSumula.Sumula.PartidaCampeonato.iRodada == IDRodada && s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato).ToList()
+                .OrderBy(p=>p.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+
+            return PartialView("_SuspensoDetails");
+        }
+
+        public ActionResult ListaRodada(int? IDCampeonato)
+        {
+
+            if (IDCampeonato == null)
+            {
+                IDCampeonato = 0;
+            }
+
+            return Json(QuantidadeRodadas(IDCampeonato??0), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -194,6 +240,7 @@ namespace KVL.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

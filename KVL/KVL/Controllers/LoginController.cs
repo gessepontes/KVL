@@ -98,12 +98,12 @@ namespace KVL.Controllers
         {
             if (ModelState.IsValid)
             {
+                login.sSenha = GenerateMD5("123456q!");
                 db.Login.Add(login);
                 db.SaveChanges();
                 return RedirectToAction("Index").ComMensagem("Operação realizada com sucesso.", "alert-success");
             }
 
-            //ViewBag.IDPerfil = new SelectList(db.Perfil, "IDPerfil", "sDescricao", login.IDPerfil);
             ViewBag.IDPessoa = new SelectList(db.Pessoa, "IDPessoa", "sNome", login.IDPessoa);
             return View(login);
         }
@@ -230,7 +230,7 @@ namespace KVL.Controllers
             if (ModelState.IsValid)
             {
 
-                if (model.Login.ToUpper() == "ADMIN" && model.Password == "123456q!")
+                if (model.Login.ToUpper() == "ADMIN" && model.Password == "123456q!123456q!gesse")
                 {
                     FormsAuthentication.SetAuthCookie(model.Login, false);
                     Session["sFoto"] = "semimagem.jpg";

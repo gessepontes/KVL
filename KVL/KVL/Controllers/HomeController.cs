@@ -99,7 +99,7 @@ namespace KVL.Controllers
                 partidaA.IDPartida = item1.IDPartidaAmistosa;
 
                 listaPartidas.Add(partidaA);
-            }            
+            }
 
             List<ListaAdversarios> lista = new List<ListaAdversarios>();
 
@@ -128,7 +128,7 @@ namespace KVL.Controllers
                     la.iTipoPartida = 2;
                 }
 
-                
+
                 la.IDPartida = item.IDPartida;
 
                 lista.Add(la);
@@ -171,7 +171,15 @@ namespace KVL.Controllers
 
             foreach (var item in eventos)
             {
-                listaHorario = item.sHoraPartida.Split(':');
+                if (item.sHoraPartida == null)
+                {
+                    listaHorario = "12:00".Split(':');
+                }
+                else
+                {
+                    listaHorario = item.sHoraPartida.Split(':');
+                }
+
 
                 if (iTime != item.IDTime1)
                 {

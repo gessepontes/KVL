@@ -13,6 +13,7 @@ using LigaWeb;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace KVL.Controllers
 {
@@ -176,7 +177,7 @@ namespace KVL.Controllers
         [Authorize(Roles = "Administrador")]
         public ActionResult Senha()
         {
-            ViewBag.IDLogin = new SelectList(db.Login, "IDLogin", "sLogin");
+            ViewBag.IDLogin = new SelectList(db.Login.OrderBy(m => m.sLogin), "IDLogin", "sLogin");
             return View();
 
         }
@@ -227,9 +228,12 @@ namespace KVL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(AcessoViewModel model)
         {
+            int iQntPago;
+            DateTime dDataInicio;
+            Boolean bPagamento = true;
+
             if (ModelState.IsValid)
             {
-
                 if (model.Login.ToUpper() == "ADMIN" && model.Password == "123456q!123456q!gesse")
                 {
                     FormsAuthentication.SetAuthCookie(model.Login, false);
@@ -239,7 +243,7 @@ namespace KVL.Controllers
                 }
 
                 string senha = GenerateMD5(model.Password);
-                var loginUser = db.Login.Where(p => p.sLogin.ToUpper() == model.Login.ToUpper() && p.bConfimacao == true && p.bAtivo == true && p.sSenha == senha).ToList();
+                List<Login> loginUser = db.Login.Where(p => p.sLogin.ToUpper() == model.Login.ToUpper() && p.sSenha == senha).ToList();
 
                 if (loginUser.Count != 0)
                 {
@@ -247,6 +251,43 @@ namespace KVL.Controllers
 
                     foreach (var item in loginUser)
                     {
+                        if (item.bConfimacao == false)
+                        {
+                            return View().ComMensagem("Usuário necessita de confirmação do e-mail para habilitar o acesso.", "alert-danger");
+                        }
+
+                        if (item.bAtivo == false)
+                        {
+                            return View().ComMensagem("Usuário encontra-se inativo entre em contato com o administrador do site.", "alert-danger");
+                        }
+
+
+                        if (item.Pagamento == null || item.Pagamento.Count == 0)
+                        {
+                            bPagamento = false;
+                        }
+                        else {
+                            foreach (var item2 in item.Pagamento)
+                            {
+                                iQntPago = item2.iQuantidadeMes;
+                                dDataInicio = item2.dDataInicio;
+
+                                if (DateTime.Now >= dDataInicio.AddMonths(iQntPago))
+                                {
+                                    bPagamento = false;
+                                }
+                                else
+                                {
+                                    bPagamento = true;
+                                }
+                            }
+                        }
+
+                        if (!bPagamento)
+                        {
+                            return View().ComMensagem("Usuário encontra-se inativo entre em contato com o administrador do site.", "alert-danger");
+                        }
+
                         Session["sFoto"] = item.Pessoa.sFoto;
                         Session["id"] = item.Pessoa.IDPessoa;
                     }
@@ -430,14 +471,14 @@ namespace KVL.Controllers
             {
                 body += "<table style='border - collapse:collapse; border - spacing:0; Margin - left:auto; Margin - right:auto; width: 600px; background - color:#ffffff;font-size:14px;table-layout:fixed'><tbody><tr><td style='padding:0;vertical-align:top;text-align:left'><div><div style='font-size:32px;line-height:32px'>&nbsp;</div></div>";
                 body += "<table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><h1 style='font - style:normal; font - weight:700; Margin - bottom:18px; Margin - top:0; font - size:36px; line - height:44px; font - family:Ubuntu,sans - serif; color:#565656;text-align:center'><strong style='font-weight:bold'>Mudança de Senha</strong></h1>";
-                body += "</td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><div style='min - height:20px'>&nbsp;</div></td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><p style='font - style:normal; font - weight:400; Margin - bottom:24px; Margin - top:0; line - height:24px; font - family:Ubuntu,sans - serif; color:#787778;font-size:16px'>Obrigado por participar desta emoção. Segue o link para mudança de sua senha.</p></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div><u></u><a style='border-radius:3px;display:inline-block;font-size:14px;font-weight:700;line-height:24px;padding:13px 35px 12px 35px;text-align:center;text-decoration:none!important;color:#fff;font-family:Ubuntu,sans-serif;background-color:#80bf2e' href=\"{1}\" target='_blank'>Clique aqui</a><u></u></div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div style='min-height:14px'>&nbsp;</div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><p style='font-style:normal;font-weight:400;Margin-bottom:0;Margin-top:0;line-height:24px;font-family:Ubuntu,sans-serif;color:#787778;font-size:16px'><em>Equipe </em>Liga Cearense fut-7 agradece sua preferência.</p></td></tr></tbody></table><div style='font-size:32px;line-height:32px'>&nbsp;</div></td></tr></tbody></table>";
+                body += "</td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><div style='min - height:20px'>&nbsp;</div></td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><p style='font - style:normal; font - weight:400; Margin - bottom:24px; Margin - top:0; line - height:24px; font - family:Ubuntu,sans - serif; color:#787778;font-size:16px'>Obrigado por participar desta emoção. Segue o link para mudança de sua senha.</p></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div><u></u><a style='border-radius:3px;display:inline-block;font-size:14px;font-weight:700;line-height:24px;padding:13px 35px 12px 35px;text-align:center;text-decoration:none!important;color:#fff;font-family:Ubuntu,sans-serif;background-color:#80bf2e' href=\"{1}\" target='_blank'>Clique aqui</a><u></u></div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div style='min-height:14px'>&nbsp;</div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><p style='font-style:normal;font-weight:400;Margin-bottom:0;Margin-top:0;line-height:24px;font-family:Ubuntu,sans-serif;color:#787778;font-size:16px'><em>Equipe </em>Society PRO agradece sua preferência.</p></td></tr></tbody></table><div style='font-size:32px;line-height:32px'>&nbsp;</div></td></tr></tbody></table>";
 
             }
             else
             {
                 body += "<table style='border - collapse:collapse; border - spacing:0; Margin - left:auto; Margin - right:auto; width: 600px; background - color:#ffffff;font-size:14px;table-layout:fixed'><tbody><tr><td style='padding:0;vertical-align:top;text-align:left'><div><div style='font-size:32px;line-height:32px'>&nbsp;</div></div>";
                 body += "<table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><h1 style='font - style:normal; font - weight:700; Margin - bottom:18px; Margin - top:0; font - size:36px; line - height:44px; font - family:Ubuntu,sans - serif; color:#565656;text-align:center'><strong style='font-weight:bold'>Confirmação de Conta</strong></h1>";
-                body += "</td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><div style='min - height:20px'>&nbsp;</div></td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><p style='font - style:normal; font - weight:400; Margin - bottom:24px; Margin - top:0; line - height:24px; font - family:Ubuntu,sans - serif; color:#787778;font-size:16px'>Obrigado por participar desta emoção. Segue o link para confirmação de sua conta.</p></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div><u></u><a style='border-radius:3px;display:inline-block;font-size:14px;font-weight:700;line-height:24px;padding:13px 35px 12px 35px;text-align:center;text-decoration:none!important;color:#fff;font-family:Ubuntu,sans-serif;background-color:#80bf2e' href=\"{1}\" target='_blank'>Clique aqui</a><u></u></div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div style='min-height:14px'>&nbsp;</div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><p style='font-style:normal;font-weight:400;Margin-bottom:0;Margin-top:0;line-height:24px;font-family:Ubuntu,sans-serif;color:#787778;font-size:16px'><em>Equipe </em>Liga Cearense fut-7 agradece sua preferência.</p></td></tr></tbody></table><div style='font-size:32px;line-height:32px'>&nbsp;</div></td></tr></tbody></table>";
+                body += "</td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><div style='min - height:20px'>&nbsp;</div></td></tr></tbody></table><table style='border - collapse:collapse; border - spacing:0; table - layout:fixed; width: 100 % '><tbody><tr><td style='padding: 0; vertical - align:top; padding - left:32px; padding - right:32px; word -break:break-word; word - wrap:break-word'><p style='font - style:normal; font - weight:400; Margin - bottom:24px; Margin - top:0; line - height:24px; font - family:Ubuntu,sans - serif; color:#787778;font-size:16px'>Obrigado por participar desta emoção. Segue o link para confirmação de sua conta.</p></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div><u></u><a style='border-radius:3px;display:inline-block;font-size:14px;font-weight:700;line-height:24px;padding:13px 35px 12px 35px;text-align:center;text-decoration:none!important;color:#fff;font-family:Ubuntu,sans-serif;background-color:#80bf2e' href=\"{1}\" target='_blank'>Clique aqui</a><u></u></div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><div style='min-height:14px'>&nbsp;</div></td></tr></tbody></table><table style='border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%'><tbody><tr><td style='padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word'><p style='font-style:normal;font-weight:400;Margin-bottom:0;Margin-top:0;line-height:24px;font-family:Ubuntu,sans-serif;color:#787778;font-size:16px'><em>Equipe </em>Society PRO agradece sua preferência.</p></td></tr></tbody></table><div style='font-size:32px;line-height:32px'>&nbsp;</div></td></tr></tbody></table>";
 
             }
 

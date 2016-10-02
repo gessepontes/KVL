@@ -29,6 +29,7 @@ namespace KVL.Context
         public virtual DbSet<Sumula> Sumula { get; set; }
         public virtual DbSet<Time> Time { get; set; }
         public virtual DbSet<CampeonatoGrupo> CampeonatoGrupo { get; set; }
+        public virtual DbSet<Pagamento> Pagamento { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -124,6 +125,11 @@ namespace KVL.Context
             modelBuilder.Entity<Login>()
                 .Property(e => e.sSenha)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Login>()
+                .HasMany(e => e.Pagamento)
+                .WithRequired(e => e.Login)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PartidaAmistosa>()
                 .Property(e => e.sHoraPartida)
@@ -256,6 +262,7 @@ namespace KVL.Context
                 .HasMany(e => e.CampeonatoGrupo)
                 .WithRequired(e => e.Inscrito)
                 .WillCascadeOnDelete(false);
+
         }
     }
 }

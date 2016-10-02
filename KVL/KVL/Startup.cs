@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(KVL.Startup))]
-namespace KVL
+[assembly: OwinStartupAttribute(typeof(SocietyPro.Startup))]
+namespace SocietyPro
 {
     public partial class Startup
     {

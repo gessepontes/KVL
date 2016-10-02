@@ -1,6 +1,7 @@
 namespace KVL.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
@@ -15,6 +16,7 @@ namespace KVL.Models
             bAtivo = true;
             bConfimacao = false;
             sSenha = "";
+            Pagamento = new HashSet<Pagamento>();
         }
 
         [Key]
@@ -49,6 +51,10 @@ namespace KVL.Models
         public string sSecurityStamp { get; set; }
 
         public virtual Pessoa Pessoa { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pagamento> Pagamento { get; set; }
+
     }
 
     public enum Perfil : int

@@ -115,19 +115,20 @@ namespace KVL.Controllers
             return View();
         }
 
-        public ActionResult SuspensoDetails(int IDRodada, int IDCampeonato)
+        public ActionResult SuspensoDetails(int? IDRodada, int ?IDCampeonato)
         {
 
             ViewBag.CampeonatoNome = db.Campeonato.Find(IDCampeonato).sNome;
             ViewBag.Rodada = IDRodada;
 
             IDRodada = IDRodada - 1;
+
             ViewBag.SuspensoDetails = db.Cartao
                 .Where(p => p.iTipoCartao == TipoCartao.SegundoAmareloVermelho || p.iTipoCartao == TipoCartao.Vermelho || p.iTipoCartao == TipoCartao.VermelhoAmarelo)
-                .Where(s=>s.JogadorSumula.Sumula.PartidaCampeonato.iRodada == IDRodada && s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato).ToList()
-                .OrderBy(p=>p.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
+                .Where(s => s.JogadorSumula.Sumula.PartidaCampeonato.iRodada == IDRodada && s.JogadorSumula.Sumula.PartidaCampeonato.Inscrito.PreInscrito.IDCampeonato == IDCampeonato).ToList()
+                .OrderBy(p => p.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome);
 
-            return PartialView("_SuspensoDetails");
+            return View("SuspensoDetails");
         }
 
         public ActionResult ListaRodada(int? IDCampeonato)

@@ -1,0 +1,53 @@
+﻿@using KVL.Models
+
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suspensos - @ViewBag.CampeonatoNome Rodada - @ViewBag.Rodada</h3>
+                <div class="form-horizontal">
+                    <div class="control-label col-md-12">
+                        <table id="ranking" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (Cartao item in ViewBag.SuspensoDetails)
+                                {
+                                <tr>
+                                    <td align="left">
+                                        @item.JogadorSumula.JogadorInscrito.Jogador.Pessoa.sNome.ToUpper()
+                                    </td>
+                                    <td align="left">
+                                        @item.JogadorSumula.JogadorInscrito.Jogador.Time.sNome.ToUpper()
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Suspenso", "Cartao")'">Voltar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>

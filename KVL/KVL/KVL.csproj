@@ -190,6 +190,7 @@
     <Compile Include="Controllers\JogadorController.cs" />
     <Compile Include="Controllers\JogadorInscritoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
     <Compile Include="Controllers\PartidaAmistosaController.cs" />
     <Compile Include="Controllers\PartidaCampeonatoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\Campeonato.cs" />
     <Compile Include="Models\CampeonatoGrupo.cs" />
     <Compile Include="Models\Campo.cs" />
+    <Compile Include="Models\Pagamento.cs" />
     <Compile Include="Models\Cartao.cs" />
     <Compile Include="Models\DecimalModelBinder.cs" />
     <Compile Include="Models\GolAmistoso.cs" />
@@ -668,7 +670,12 @@
     <Content Include="Views\Sumula\CreateUsuario.cshtml" />
     <Content Include="Views\Sumula\IndexUsuario.cshtml" />
     <Content Include="Views\Cartao\Suspenso.cshtml" />
-    <Content Include="Views\Cartao\_SuspensoDetails.cshtml" />
+    <Content Include="Views\Cartao\SuspensoDetails.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\Pagamento\Create.cshtml" />
+    <Content Include="Views\Pagamento\Delete.cshtml" />
+    <Content Include="Views\Pagamento\Details.cshtml" />
+    <Content Include="Views\Pagamento\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

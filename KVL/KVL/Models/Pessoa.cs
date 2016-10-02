@@ -22,11 +22,12 @@ namespace KVL.Models
         [Key]
         public int IDPessoa { get; set; }
 
+        private string _sNome;
+
+
         [Required(ErrorMessage = "{0} é um campo obrigatório.")]
         [StringLength(100)]
         [Display(Name = "Nome")]
-        // public string sNome { get; set; }
-        private string _sNome;
         public string sNome
         {
             get
